@@ -3,6 +3,8 @@ package vista;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
@@ -11,25 +13,28 @@ import observer.IObservador;
 import modelo.*;
 import controlador.Controlador;
 
-public class VistaMenu extends Vista{
+public class VistaMenu extends Vista implements IObservador{
+	
+	protected Agencia agenVista;
 
 	private JMenuBar barra;
 	private JMenu menu;
 	private Producto prod;
-	
-	public VistaMenu(){
-		super();
-		inicializarComponentes();		
-		if(this.agenVista.getProductos().size() == 0){
-			prod = new Excursion(1, "Paracaidismo", 30, 20);
-			this.agenVista.AgregarProducto(prod);
-		}
+	JComboBox productos;
+	public VistaMenu(Agencia agencia){
+
+		this.agenVista = agencia;
+		this.agenVista.agregarObservador(this);
+		
+		productos = new JComboBox();
+		configurarComponentes();		
+		
 		
 	}
 
 	
 
-	public void inicializarComponentes() {
+	public void configurarComponentes() {
 		// TODO Auto-generated method stub
 		JMenuBar barra = new JMenuBar();
 		JMenu menu = new JMenu("Menu");
@@ -49,7 +54,7 @@ public class VistaMenu extends Vista{
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						VistaAñadirProducto vistaExcu = new VistaAñadirProducto(true);
+						VistaAñadirProducto vistaExcu = new VistaAñadirProducto(agenVista,true);
 						vistaExcu.setVisible(true);
 					}
 					
@@ -62,7 +67,7 @@ public class VistaMenu extends Vista{
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						VistaAñadirProducto vistaPas = new VistaAñadirProducto(false);
+						VistaAñadirProducto vistaPas = new VistaAñadirProducto(agenVista, false);
 						vistaPas.setVisible(true);
 						
 					}
@@ -76,7 +81,7 @@ public class VistaMenu extends Vista{
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						//VistaMenu.this.Actualizar(agenVista);
-						Vista vistaAña = new VistaAñadirVenta();
+						Vista vistaAña = new VistaAñadirVenta(agenVista);
 					}
 					
 					
@@ -87,16 +92,44 @@ public class VistaMenu extends Vista{
 		this.setTitle("Menu principal");
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		
+		configurarCombo(this.agenVista);
 		
+		
+		this.configurarVentana();
 
 	}
 
 
+	public void configurarCombo(Agencia agencia){
+		
+		List<Producto> listProductos = new ArrayList<Producto>();
+		this.setLayout(null);
+		listProductos = agencia.getProductos();
+
+		productos.removeAllItems();
+		for(Producto prod: listProductos){
+			productos.addItem(prod.getDescripcion());
+			System.out.println(prod.getDescripcion());
+		}
+
+		productos.setBounds(10,20,300,100);
+
+		this.add(productos);
+	}
 
 	@Override
 	public void Actualizar(Agencia agencia) {
 		this.agenVista = agencia;
 		System.out.println("Soy el menu actualizandome");
+		this.configurarCombo(agencia);
+		
+	}
+
+
+
+	@Override
+	public void setupInicial() {
+		// TODO Auto-generated method stub
 		
 	}
 

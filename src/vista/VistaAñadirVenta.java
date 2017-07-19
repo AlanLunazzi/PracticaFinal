@@ -5,27 +5,37 @@ import java.util.List;
 
 import javax.swing.*;
 
+import observer.IObservador;
 import modelo.*;
 
-public class VistaAñadirVenta extends Vista {
+public class VistaAñadirVenta extends Vista implements IObservador{
 
-	
+	JComboBox productos;
 
-	public VistaAñadirVenta(){
-		this.agenVista.agregarObservador(this);
-
+	protected Agencia agenVistaVenta;
+	public VistaAñadirVenta(Agencia agen){
+		this.agenVistaVenta = agen;
+		this.agenVistaVenta.agregarObservador(this);
+		productos =  new JComboBox();
+		configuracionInicial();
 	}
 
-	public void inicializarComponentes() {
+	public void configuracionInicial() {
+		//this.Actualizar(agenVista);
 		
-		JComboBox productos =  new JComboBox();
-		List<Producto> listProductos = new ArrayList<Producto>();
+		
 		this.setLayout(null);
-		listProductos = this.agenVista.getProductos();
 		
-		/*
-		Producto prueba = new Excursion(1,"Prueba",2,3);
-		this.agenVista.AgregarProducto(prueba);*/
+		configurarCombo(this.agenVistaVenta);
+		
+		
+	}
+
+	private void configurarCombo(Agencia agen) {
+		// TODO Auto-generated method stub
+		
+		List<Producto> listProductos = new ArrayList<Producto>();
+		listProductos = agen.getProductos();
 
 		productos.removeAllItems();
 		for(Producto prod: listProductos){
@@ -36,12 +46,21 @@ public class VistaAñadirVenta extends Vista {
 		productos.setBounds(10,20,300,100);
 
 		this.add(productos);
+		
 	}
 
 	@Override
 	public void Actualizar(Agencia agencia) {
 		// TODO Auto-generated method stub
-		this.agenVista = agencia;
+		this.agenVistaVenta = agencia;
+		this.configurarCombo(agencia);
+		
+	}
+
+	@Override
+	public void setupInicial() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

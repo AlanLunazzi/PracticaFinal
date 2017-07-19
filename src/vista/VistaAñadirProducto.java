@@ -5,18 +5,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import modelo.Agencia;
+import observer.IObservador;
 import modelo.*;
 
-public class VistaAñadirProducto extends Vista {
+public class VistaAñadirProducto extends Vista implements IObservador {
 
 
+	public Agencia agenVistaProducto;
 	final protected boolean esExcursion;
-	public VistaAñadirProducto(boolean excu) {
-		super();
+	public VistaAñadirProducto(Agencia agenVista, boolean excu) {
 		this.esExcursion = excu;
 		this.setearVentana();
-		
+		this.agenVistaProducto = agenVista;
+		this.agenVistaProducto.agregarObservador(this);
 	}
 	public void setearVentana() {
 		this.setLayout(null);
@@ -94,7 +95,9 @@ public class VistaAñadirProducto extends Vista {
 							prod = new PasajeAereo(valCodigo, valDescripcion, valPreBase, valcampoEsp);
 						}
 						
-						agenVista.AgregarProducto(prod);
+						agenVistaProducto.AgregarProducto(prod);
+						agenVistaProducto.actualizarObservadores(agenVistaProducto);
+						
 						
 						
 						boton.setEnabled(false);
@@ -132,14 +135,14 @@ public class VistaAñadirProducto extends Vista {
 	}
 
 	@Override
-	public void inicializarComponentes() {
+	public void setupInicial() {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void Actualizar(Agencia agencia) {
 		// TODO Auto-generated method stub
-		this.agenVista = agencia;
+		//this.agenVistaProducto = agencia;
 		System.out.println("El agregar producto actualizo la agencia");
 		
 	}

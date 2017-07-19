@@ -5,16 +5,14 @@ import javax.swing.*;
 import observer.IObservador;
 import modelo.*;
 
-public abstract class Vista extends JFrame implements IObservador{
+public abstract class Vista extends JFrame{
 
-	protected Agencia agenVista;
+	
 	public Vista(){
-		agenVista = new Agencia();
-		inicializarComponentes();
+		setupInicial();
 		configurarVentana();	
-		agenVista.agregarObservador(this);
 	}
-	public abstract void inicializarComponentes();
+	public abstract void setupInicial();
 	public void configurarVentana() {
 		this.setSize(500, 500);
 		this.setLocation(300, 150);

@@ -22,12 +22,13 @@ public class Agencia extends Observado{
 	}
 	public void AgregarProducto(Producto prod){
 		productos.add(prod);
-		this.actualizarObservadores(this);
+		;
 		System.out.println("Se agrego el producto con descripcion "+prod.descripcion +" Precio base $" +prod.precioBase +" y codigo "+prod.codigo);
 		if(prod instanceof Excursion)
 			System.out.println("Es una excursion");
 		else if(prod instanceof PasajeAereo)
 			System.out.println("Es un pasaje aereo");
+		this.actualizarObservadores(this);
 	}
 
 	public List<Producto> getProductos() {

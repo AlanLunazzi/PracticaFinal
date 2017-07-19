@@ -16,7 +16,6 @@ public class VistaAñadirProducto extends Vista {
 		super();
 		this.esExcursion = excu;
 		this.setearVentana();
-		this.agenVista.agregarObservador(this);
 		
 	}
 	public void setearVentana() {
@@ -96,7 +95,6 @@ public class VistaAñadirProducto extends Vista {
 						}
 						
 						agenVista.AgregarProducto(prod);
-						//agenVista.actualizarObservadores(agenVista);
 						
 						
 						boton.setEnabled(false);

@@ -7,6 +7,7 @@ import modelo.Agencia;
 
 public class Observado {
 
+
 	List<IObservador> observadores = new ArrayList<IObservador>();
 	
 	public void agregarObservador(IObservador obs){
@@ -18,4 +19,5 @@ public class Observado {
 			i.Actualizar(agencia);
 		}
 	}
+
 }

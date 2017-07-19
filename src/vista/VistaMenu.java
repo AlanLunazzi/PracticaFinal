@@ -15,14 +15,11 @@ public class VistaMenu extends Vista{
 
 	private JMenuBar barra;
 	private JMenu menu;
-	private JMenuItem añadirExcursion;
 	private Producto prod;
-	JComboBox tipo = new JComboBox();
 	
 	public VistaMenu(){
 		super();
 		inicializarComponentes();		
-		this.agenVista.agregarObservador(this);
 		if(this.agenVista.getProductos().size() == 0){
 			prod = new Excursion(1, "Paracaidismo", 30, 20);
 			this.agenVista.AgregarProducto(prod);
@@ -78,8 +75,8 @@ public class VistaMenu extends Vista{
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						JFrame vistaAña = new VistaAñadirVenta();
-						vistaAña.setVisible(true);
+						//VistaMenu.this.Actualizar(agenVista);
+						Vista vistaAña = new VistaAñadirVenta();
 					}
 					
 					
